@@ -74,7 +74,7 @@ export default function LoginForm() {
       <Form.Item label="验证码">
         <Input.Group compact>
           <Form.Item name="code" rules={[{ required: true, message: '请输入验证码!' }]} noStyle>
-            <Input name="code" style={{ width: 'calc(100% - 150px)' }} />
+            <Input name="code" style={{ width: 'calc(100% - 100px)' }} />
           </Form.Item>
           <div className='verify-code' onClick={getVerify} dangerouslySetInnerHTML={{__html: svgVerify}}></div>
         </Input.Group>
