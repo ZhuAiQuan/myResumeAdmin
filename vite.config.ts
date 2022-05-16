@@ -12,6 +12,7 @@ export default defineConfig({
       '_c': path.resolve(__dirname, './src/components'),
       'views': path.resolve(__dirname, './src/views'),
       'utils': path.resolve(__dirname, './src/utils')
-    }
+    },
+    extensions: ['.mjs', '.js', '.ts', '.jsx', '.tsx', '.json']
   }
 })

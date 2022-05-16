@@ -7,11 +7,13 @@ import { Provider } from "react-redux";
 
 function App(): JSX.Element {
   return (
-    <Router>
-      <div className="App">
-        <RouterView />
-      </div>
-    </Router>
+    <Provider store={store}>
+      <Router>
+        <div className="App">
+          <RouterView />
+        </div>
+      </Router>
+    </Provider>
   );
 }
 

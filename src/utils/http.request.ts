@@ -1,14 +1,17 @@
-// @ts-ignore
-// @ts-ignore
-import axios from 'axios';
-// @ts-ignore
+import axios, { AxiosRequestConfig, AxiosInstance } from 'axios';
+
 import config from '@/config'
-console.log(config)
+
 const { timeout } = config
 
-// @ts-ignore
+interface Queue {
+  [key: string]: boolean
+}
+
 export default class HttpRequest {
-  constructor(baseURL) {
+  private baseURL: string;
+  private queue: Queue
+  constructor(baseURL: string) {
     this.baseURL = baseURL;
     this.queue = {}
   }
@@ -21,10 +24,10 @@ export default class HttpRequest {
       }
     }
   }
-  destroy(url) {
+  destroy(url: string) {
     delete this.queue[url]
   }
-  interceptors(instance, url) {
+  interceptors(instance: AxiosInstance, url: string) {
     instance.interceptors.request.use(config => {
       // 请求前拦截处理
       this.queue[url] = true
@@ -39,10 +42,10 @@ export default class HttpRequest {
       return Promise.reject(errs)
     })
   }
-  request(options) {
+  request(options: AxiosRequestConfig) {
     const instance = axios.create();
     options = Object.assign(this.getConfig(), options);
-    this.interceptors(instance, options.url);
+    this.interceptors(instance, options.url as string);
     return instance(options)
   }
 }
