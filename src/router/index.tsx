@@ -6,7 +6,7 @@ const Login = lazy(() => import('views/login'));
 const Home = lazy(() => import('views/home'));
 const NotFound = lazy(() => import('views/404'))
 
-function RouterView() {
+function RouterView(): JSX.Element {
   return (
     <>
       <Suspense fallback={'<span>loading<span/>'}>
