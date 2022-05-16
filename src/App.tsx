@@ -5,15 +5,13 @@ import RouterView from "@/router";
 import store from "./store";
 import { Provider } from "react-redux";
 
-function App() {
+function App(): JSX.Element {
   return (
-    <Provider store={store}>
-      <Router>
-        <div className="App">
-          <RouterView />
-        </div>
-      </Router>
-    </Provider>
+    <Router>
+      <div className="App">
+        <RouterView />
+      </div>
+    </Router>
   );
 }
 

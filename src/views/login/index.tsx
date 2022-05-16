@@ -1,3 +1,4 @@
+// @ts-nocheck
 import './index.less';
 import FormData from './card'
 
