@@ -1,58 +1,52 @@
 import React, { useEffect, useState } from 'react';
-// @ts-ignore
 import { Form, Input, Button, Checkbox } from 'antd';
 import { getVerifyCode } from 'api/verify';
 
-export default function LoginForm() {
-  const [defaultValue, setDefaultValue] = useState({
-    username: '',
-    password: ''
-  })
-  const [svgVerify, updateVerify] = useState(null);
+export type IFormData = {
+  password: string
+  username: string
+  remember: boolean
+  code: string
+}
+type Props = {
+  updateLoginState: (data: IFormData) => void
+  username: string
+  password: string
+}
+function LoginForm(props: Props) {
+  const { updateLoginState, username, password } = props;
+  const [svgVerify, updateVerify] = useState('');
   const timestramp = new Date().getTime();
-  const onFinish = (values) => {
-    const { password, username, remember, code } = values;
-    if (remember) {
-      localStorage.setItem('_login_remember', JSON.stringify({ password, username }))
-    } else {
-      const temp = JSON.parse(localStorage.getItem('_login_remember'));
-      if (temp.username === username) localStorage.setItem('_login_remember', '')
-    }
-  };
 
-  const onFinishFailed = (errorInfo) => {
+  const onFinishFailed = (errorInfo: unknown) => {
     console.log('Failed:', errorInfo);
   };
   const getVerify = () => {
-    // request verify
-    getVerifyCode(timestramp).then(res => {
+    interface ResponseData {
+      data: string
+    }
+    getVerifyCode(timestramp).then((res: ResponseData) => {
       updateVerify(res.data)
     })
   }
   useEffect(() => {
-    const remember = localStorage.getItem('_login_remember');
-    if (remember && JSON.parse(remember)) {
-      const { username, password } = JSON.parse(remember);
-      // 赋值
-      setDefaultValue(() => ({
-        username,
-        password
-      }))
-    }
     // 获取验证码
-    getVerify()
+    getVerify();
   }, [])
+
   return (
     <Form
+      className='form-item'
       name="basic"
       labelCol={{ span: 6 }}
       wrapperCol={{ span: 14 }}
-      onFinish={onFinish}
+      onFinish={updateLoginState}
       onFinishFailed={onFinishFailed}
       autoComplete="off"
       initialValues={{
         remember: true,
-        ...defaultValue
+        username,
+        password
       }}
     >
       <Form.Item
@@ -95,3 +89,5 @@ export default function LoginForm() {
     </Form>
   )
 }
+
+export default LoginForm;
