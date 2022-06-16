@@ -1,4 +1,4 @@
-const data = {
+const defaultData = {
   isLogin: false
 }
 type Actions = {
@@ -6,8 +6,8 @@ type Actions = {
   data: unknown
 }
 
-const appReducer = (initData = data, actions: Actions) => {
-  const { type, data } = actions;
+const appReducer = (initData = defaultData, actions: Actions) => {
+  const { type, data }: { type: string, data: any } = actions;
   switch(type) {
     case 'test':
       return {
@@ -20,6 +20,14 @@ const appReducer = (initData = data, actions: Actions) => {
         ...data
       }
     default:
+      if (!initData.isLogin) {
+        const loginState = JSON.parse(localStorage.getItem('login') as string) as {isLogin: boolean};
+
+        return {
+          ...data,
+          isLogin: loginState?.isLogin || false
+        }
+      }
       return initData
   }
 };

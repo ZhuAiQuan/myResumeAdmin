@@ -8,12 +8,12 @@ export type IFormData = {
   remember: boolean
   code: string
 }
-type Props = {
-  updateLoginState: (data: IFormData) => void
-  username: string
-  password: string
-}
-function LoginForm(props: Props) {
+// type Props = {
+//   updateLoginState: (data: IFormData) => void
+//   username: string
+//   password: string
+// }
+function LoginForm(props: Common.Props) {
   const { updateLoginState, username, password } = props;
   const [svgVerify, updateVerify] = useState('');
   const timestramp = new Date().getTime();

@@ -25,5 +25,6 @@
     },
   },
   "include": ["src"],
+  "exclude": ["src/assets/fonts/iconfont.js", "src/utils/rainy.js"],
   "references": [{ "path": "./tsconfig.node.json" }]
 }
